@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{3784742C-7C62-44D3-9C1F-E8A97445265D}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Poller.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Sender.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Poller">
+        <MSBuild Projects="Poller.dproj"/>
+    </Target>
+    <Target Name="Poller:Clean">
+        <MSBuild Projects="Poller.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Poller:Make">
+        <MSBuild Projects="Poller.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Sender">
+        <MSBuild Projects="Sender.dproj"/>
+    </Target>
+    <Target Name="Sender:Clean">
+        <MSBuild Projects="Sender.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Sender:Make">
+        <MSBuild Projects="Sender.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Poller;Sender"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Poller:Clean;Sender:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Poller:Make;Sender:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
