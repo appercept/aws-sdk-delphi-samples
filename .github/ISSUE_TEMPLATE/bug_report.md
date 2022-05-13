@@ -26,6 +26,7 @@ If applicable, add screenshots to help explain your problem.
 **Delphi Desktop (please complete the following information):**
  - OS: [e.g. Windows 10 Pro x64]
  - Delphi Version [e.g. 11.1 patch 1]
+ - Appercept AWS SDK Version [e.g. 0.12.0]
 
 **Target Platform (please complete the following information if you're running the sample on a different platform from your Delphi Desktop):**
  - Device: [e.g. iPhone6]
