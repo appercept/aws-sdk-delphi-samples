@@ -1,0 +1,119 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  Caption = 'Polly Speak'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object BtnSpeak: TButton
+    Action = ActSpeak
+    Anchors = [akRight, akBottom]
+    Enabled = False
+    ImageIndex = -1
+    Position.X = 552.000000000000000000
+    Position.Y = 448.000000000000000000
+    TabOrder = 0
+  end
+  object MediaPlayer1: TMediaPlayer
+    Left = 384
+    Top = 184
+  end
+  object RbStandard: TRadioButton
+    Anchors = [akLeft, akBottom]
+    Position.X = 82.000000000000000000
+    Position.Y = 450.000000000000000000
+    Size.Width = 97.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 6
+    Text = 'Standard'
+  end
+  object RbNeural: TRadioButton
+    Anchors = [akLeft, akBottom]
+    Position.X = 187.000000000000000000
+    Position.Y = 450.000000000000000000
+    Size.Width = 97.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    Text = 'Neural'
+  end
+  object LblEngine: TLabel
+    Anchors = [akLeft, akBottom]
+    Position.X = 8.000000000000000000
+    Position.Y = 451.000000000000000000
+    Size.Width = 65.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Engine:'
+    TabOrder = 7
+  end
+  object Panel1: TPanel
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 624.000000000000000000
+    Size.Height = 432.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 10
+    object VoicesListView: TListView
+      ItemAppearanceClassName = 'TImageListItemBottomDetailAppearance'
+      ItemEditAppearanceClassName = 'TImageListItemBottomDetailShowCheckAppearance'
+      HeaderAppearanceClassName = 'TListHeaderObjects'
+      FooterAppearanceClassName = 'TListHeaderObjects'
+      Align = Left
+      Size.Width = 280.000000000000000000
+      Size.Height = 432.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      ItemAppearanceObjects.ItemObjects.Accessory.Visible = False
+      ItemAppearanceObjects.ItemObjects.Image.Visible = False
+      OnChange = VoicesListViewChange
+    end
+    object Splitter1: TSplitter
+      Align = Left
+      Cursor = crHSplit
+      MinSize = 20.000000000000000000
+      Position.X = 280.000000000000000000
+      Size.Width = 4.000000000000000000
+      Size.Height = 432.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object MemoText: TMemo
+      Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+      DataDetectorTypes = []
+      Align = Client
+      Size.Width = 340.000000000000000000
+      Size.Height = 432.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      OnKeyUp = MemoTextKeyUp
+      Viewport.Width = 336.000000000000000000
+      Viewport.Height = 428.000000000000000000
+    end
+  end
+  object CbEnableMarkup: TCheckBox
+    Anchors = [akLeft, akBottom]
+    Position.X = 292.000000000000000000
+    Position.Y = 450.000000000000000000
+    Size.Width = 181.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 11
+    Text = 'Enable Markup (SSML)'
+  end
+  object ActionList1: TActionList
+    Left = 304
+    Top = 224
+    object ActSpeak: TAction
+      Text = 'Speak'
+      Enabled = False
+      OnExecute = ActSpeakExecute
+    end
+  end
+end
