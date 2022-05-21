@@ -1,0 +1,115 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  Caption = 'Textract Demo'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object ToolBar1: TToolBar
+    Size.Width = 640.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object SpeedButton1: TSpeedButton
+      Action = ActOpen
+      Enabled = True
+      ImageIndex = -1
+      Position.X = 8.000000000000000000
+      Position.Y = 8.000000000000000000
+    end
+    object SpeedButton2: TSpeedButton
+      Action = ActDetectDocumentText
+      Enabled = False
+      ImageIndex = -1
+      Position.X = 96.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 137.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+  object MemoOutput: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Align = Bottom
+    Position.Y = 440.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    Viewport.Width = 636.000000000000000000
+    Viewport.Height = 36.000000000000000000
+  end
+  object OpenInputDocumentDialog: TOpenDialog
+    Title = 'Choose an input document image...'
+    Left = 160
+    Top = 80
+  end
+  object Panel1: TPanel
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 396.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 9
+    object BlocksListView: TListView
+      ItemAppearanceClassName = 'TImageListItemBottomDetailAppearance'
+      ItemEditAppearanceClassName = 'TImageListItemBottomDetailShowCheckAppearance'
+      HeaderAppearanceClassName = 'TListHeaderObjects'
+      FooterAppearanceClassName = 'TListHeaderObjects'
+      Align = Left
+      Size.Width = 303.000000000000000000
+      Size.Height = 396.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 6
+      ItemAppearanceObjects.ItemObjects.Accessory.Visible = False
+      ItemAppearanceObjects.ItemObjects.Image.Visible = False
+      OnChange = BlocksListViewChange
+    end
+    object Splitter1: TSplitter
+      Align = Left
+      Cursor = crHSplit
+      MinSize = 20.000000000000000000
+      Position.X = 303.000000000000000000
+      Size.Width = 4.000000000000000000
+      Size.Height = 396.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object InputDocumentImage: TImage
+      MultiResBitmap = <
+        item
+        end>
+      Align = Client
+      Size.Width = 333.000000000000000000
+      Size.Height = 396.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+  object Splitter2: TSplitter
+    Align = Bottom
+    Cursor = crVSplit
+    MinSize = 20.000000000000000000
+    Position.Y = 436.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 4.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ActionList1: TActionList
+    Left = 80
+    Top = 80
+    object ActOpen: TAction
+      Text = 'Open...'
+      Hint = 'Choose a file as the input document image.'
+      OnExecute = ActOpenExecute
+    end
+    object ActDetectDocumentText: TAction
+      Text = 'Detect Document Text'
+      Enabled = False
+      Hint = 'Detect text within the input document.'
+      OnExecute = ActDetectDocumentTextExecute
+    end
+  end
+end
