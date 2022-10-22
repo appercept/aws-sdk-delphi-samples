@@ -1,0 +1,109 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  Caption = 'Secrets Manager Console'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object SecretsListBox: TListBox
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    Position.X = 8.000000000000000000
+    Position.Y = 48.000000000000000000
+    Size.Width = 624.000000000000000000
+    Size.Height = 424.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    OnDblClick = SecretsListBoxDblClick
+    DisableFocusEffect = True
+    DefaultItemStyles.ItemStyle = ''
+    DefaultItemStyles.GroupHeaderStyle = ''
+    DefaultItemStyles.GroupFooterStyle = ''
+    Viewport.Width = 620.000000000000000000
+    Viewport.Height = 420.000000000000000000
+  end
+  object ToolBar1: TToolBar
+    Size.Width = 640.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object SelectRegion: TComboEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 0
+      ItemHeight = 19.000000000000000000
+      Items.Strings = (
+        'af-south-1'
+        'ap-east-1'
+        'ap-northeast-1'
+        'ap-northeast-2'
+        'ap-northeast-3'
+        'ap-south-1'
+        'ap-southeast-1'
+        'ap-southeast-2'
+        'ap-southeast-3'
+        'ca-central-1'
+        'eu-central-1'
+        'eu-north-1'
+        'eu-south-1'
+        'eu-west-1'
+        'eu-west-2'
+        'eu-west-3'
+        'me-south-1'
+        'sa-east-1'
+        'us-east-1'
+        'us-east-2'
+        'us-west-1'
+        'us-west-2')
+      ItemIndex = -1
+      Position.X = 8.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      OnChange = SelectRegionChange
+    end
+    object SpeedButton1: TSpeedButton
+      Action = ActStoreNewSecret
+      Anchors = [akTop, akRight]
+      Enabled = False
+      ImageIndex = -1
+      Position.X = 610.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 22.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'additembutton'
+    end
+    object SpeedButton2: TSpeedButton
+      Action = ActReloadSecrets
+      Anchors = [akTop, akRight]
+      Enabled = False
+      ImageIndex = -1
+      Position.X = 580.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 22.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'refreshtoolbutton'
+    end
+  end
+  object ActionList1: TActionList
+    Left = 96
+    Top = 120
+    object ActStoreNewSecret: TAction
+      Text = 'Store a new secret'
+      Enabled = False
+      Hint = 'Store a new secret'
+      OnExecute = ActStoreNewSecretExecute
+    end
+    object ActReloadSecrets: TAction
+      Text = 'Reload Secrets'
+      Enabled = False
+      Hint = 'Reload Secrets'
+      OnExecute = ActReloadSecretsExecute
+    end
+  end
+end
