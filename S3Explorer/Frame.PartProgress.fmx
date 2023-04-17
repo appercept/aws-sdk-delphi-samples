@@ -1,0 +1,25 @@
+object PartProgressFrame: TPartProgressFrame
+  Align = Top
+  Size.Width = 320.000000000000000000
+  Size.Height = 42.000000000000000000
+  Size.PlatformDefault = False
+  object LblCaption: TLabel
+    Anchors = [akLeft, akTop, akRight]
+    Position.X = 4.000000000000000000
+    Position.Y = 4.000000000000000000
+    Size.Width = 312.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Part X'
+    TabOrder = 0
+  end
+  object PartProgressBar: TProgressBar
+    Anchors = [akLeft, akTop, akRight]
+    Orientation = Horizontal
+    Position.X = 4.000000000000000000
+    Position.Y = 24.000000000000000000
+    Size.Width = 312.000000000000000000
+    Size.Height = 12.000000000000000000
+    Size.PlatformDefault = False
+  end
+end

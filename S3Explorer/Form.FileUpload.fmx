@@ -1,0 +1,137 @@
+object FileUploadForm: TFileUploadForm
+  Left = 0
+  Top = 0
+  Caption = 'Upload File'
+  ClientHeight = 256
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object OverallProgressBar: TProgressBar
+    Anchors = [akLeft, akTop, akRight]
+    Orientation = Horizontal
+    Position.X = 8.000000000000000000
+    Position.Y = 96.000000000000000000
+    Size.Width = 529.000000000000000000
+    Size.Height = 20.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Label1: TLabel
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 73.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Source:'
+    TabOrder = 10
+  end
+  object Label2: TLabel
+    Position.X = 8.000000000000000000
+    Position.Y = 24.000000000000000000
+    Size.Width = 73.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Destination:'
+    TabOrder = 7
+  end
+  object LblSource: TLabel
+    Anchors = [akLeft, akTop, akRight]
+    Position.X = 80.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 553.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = '(unknown)'
+    TabOrder = 9
+  end
+  object LblDestination: TLabel
+    Anchors = [akLeft, akTop, akRight]
+    Position.X = 80.000000000000000000
+    Position.Y = 24.000000000000000000
+    Size.Width = 553.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = '(unknown)'
+    TabOrder = 8
+  end
+  object Label3: TLabel
+    Position.X = 8.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 73.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Started at:'
+    TabOrder = 5
+  end
+  object LblStartedAt: TLabel
+    Anchors = [akLeft, akTop, akRight]
+    Position.X = 79.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 553.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = '(unknown)'
+    TabOrder = 6
+  end
+  object Label4: TLabel
+    Position.X = 8.000000000000000000
+    Position.Y = 56.000000000000000000
+    Size.Width = 73.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Finished at:'
+    TabOrder = 3
+  end
+  object LblFinishedAt: TLabel
+    Anchors = [akLeft, akTop, akRight]
+    Position.X = 79.000000000000000000
+    Position.Y = 56.000000000000000000
+    Size.Width = 553.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = '(unknown)'
+    TabOrder = 4
+  end
+  object Label5: TLabel
+    Position.X = 8.000000000000000000
+    Position.Y = 72.000000000000000000
+    Size.Width = 73.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Transferred:'
+    TabOrder = 1
+  end
+  object LblTransferred: TLabel
+    Anchors = [akLeft, akTop, akRight]
+    Position.X = 79.000000000000000000
+    Position.Y = 72.000000000000000000
+    Size.Width = 553.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = '(unknown)'
+    TabOrder = 2
+  end
+  object PartsProgressContainer: TVertScrollBox
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    Position.X = 8.000000000000000000
+    Position.Y = 120.000000000000000000
+    Size.Width = 625.000000000000000000
+    Size.Height = 129.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 12
+    Viewport.Width = 625.000000000000000000
+    Viewport.Height = 129.000000000000000000
+  end
+  object AbortButton: TButton
+    Anchors = [akTop, akRight]
+    Position.X = 544.000000000000000000
+    Position.Y = 96.000000000000000000
+    Size.Width = 89.000000000000000000
+    Size.Height = 20.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 14
+    Text = 'Abort'
+    OnClick = AbortButtonClick
+  end
+end

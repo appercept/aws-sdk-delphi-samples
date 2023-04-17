@@ -1,0 +1,120 @@
+object ObjectDetailsForm: TObjectDetailsForm
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnClose = FormClose
+  DesignerMasterStyle = 0
+  object TabControl1: TTabControl
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 440.000000000000000000
+    Size.PlatformDefault = False
+    TabIndex = 0
+    TabOrder = 0
+    TabPosition = PlatformDefault
+    Sizes = (
+      640s
+      414s)
+    object TiProperties: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 74.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Properties'
+      ExplicitSize.cx = 74.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object PropertiesGrid: TStringGrid
+        Align = Client
+        CanFocus = True
+        ClipChildren = True
+        Size.Width = 640.000000000000000000
+        Size.Height = 414.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Options = [ColumnResize, ColumnMove, ColLines, RowLines, Tabs, Header, HeaderClick, AutoDisplacement]
+        Viewport.Width = 636.000000000000000000
+        Viewport.Height = 389.000000000000000000
+      end
+    end
+  end
+  object ObjectToolBar: TToolBar
+    Size.Width = 640.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    object BtnDownload: TSpeedButton
+      Action = ActionDownload
+      Enabled = True
+      ImageIndex = -1
+      Position.X = 8.000000000000000000
+      Position.Y = 8.000000000000000000
+    end
+  end
+  object DownloadAsDialog: TSaveDialog
+    Filter = 'All Files (*.*)|*.*'
+    Title = 'Download as...'
+    Left = 385
+    Top = 168
+  end
+  object TblProperties: TFDMemTable
+    FieldDefs = <
+      item
+        Name = 'Property'
+        DataType = ftString
+        Size = 30
+      end
+      item
+        Name = 'Value'
+        DataType = ftString
+        Size = 200
+      end>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 161
+    Top = 160
+  end
+  object BindSourceDB1: TBindSourceDB
+    DataSet = TblProperties
+    ScopeMappings = <>
+    Left = 200
+    Top = 224
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 268
+    Top = 149
+    object LinkGridToDataSourceBindSourceDB1: TLinkGridToDataSource
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      GridControl = PropertiesGrid
+      Columns = <>
+    end
+  end
+  object ObjectActionList: TActionList
+    Left = 304
+    Top = 224
+    object ActionDownload: TAction
+      Text = 'Download'
+      OnExecute = ActionDownloadExecute
+    end
+  end
+end

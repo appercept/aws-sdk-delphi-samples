@@ -1,0 +1,260 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  Caption = 'S3 Explorer'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object StatusBar: TStatusBar
+    Position.Y = 448.000000000000000000
+    ShowSizeGrip = True
+    Size.Width = 640.000000000000000000
+    Size.Height = 32.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object LblStatus: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 8.000000000000000000
+      Text = 'Status...'
+      TabOrder = 1
+    end
+  end
+  object TabControl1: TTabControl
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 408.000000000000000000
+    Size.PlatformDefault = False
+    TabIndex = 0
+    TabOrder = 2
+    TabPosition = PlatformDefault
+    Sizes = (
+      640s
+      382s)
+    object TiObjects: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 60.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Objects'
+      ExplicitSize.cx = 60.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object Panel1: TPanel
+        Align = Client
+        Margins.Left = 8.000000000000000000
+        Margins.Right = 8.000000000000000000
+        Margins.Bottom = 8.000000000000000000
+        Size.Width = 624.000000000000000000
+        Size.Height = 336.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        object TvPrefixes: TTreeView
+          Align = Left
+          Size.Width = 201.000000000000000000
+          Size.Height = 336.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          OnChange = TvPrefixesChange
+          Viewport.Width = 197.000000000000000000
+          Viewport.Height = 332.000000000000000000
+        end
+        object LbObjects: TListBox
+          Align = Client
+          Size.Width = 419.000000000000000000
+          Size.Height = 336.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 3
+          OnDblClick = LbObjectsDblClick
+          DisableFocusEffect = True
+          DefaultItemStyles.ItemStyle = ''
+          DefaultItemStyles.GroupHeaderStyle = ''
+          DefaultItemStyles.GroupFooterStyle = ''
+          Viewport.Width = 415.000000000000000000
+          Viewport.Height = 332.000000000000000000
+        end
+        object Splitter1: TSplitter
+          Align = Left
+          Cursor = crHSplit
+          MinSize = 20.000000000000000000
+          Position.X = 201.000000000000000000
+          Size.Width = 4.000000000000000000
+          Size.Height = 336.000000000000000000
+          Size.PlatformDefault = False
+        end
+      end
+      object EditPrefix: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Top
+        TabOrder = 2
+        TabStop = False
+        ReadOnly = True
+        Position.X = 8.000000000000000000
+        Position.Y = 8.000000000000000000
+        Margins.Left = 8.000000000000000000
+        Margins.Top = 8.000000000000000000
+        Margins.Right = 8.000000000000000000
+        Margins.Bottom = 8.000000000000000000
+        Size.Width = 624.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+      end
+    end
+  end
+  object ToolBar1: TToolBar
+    Size.Width = 640.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    object BucketSelector: TComboBox
+      Anchors = [akLeft, akTop, akRight]
+      Position.X = 40.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 329.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      OnChange = BucketSelectorChange
+    end
+    object Label1: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 11.000000000000000000
+      Size.Width = 33.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 's3://'
+      TabOrder = 1
+    end
+    object SpeedButton1: TSpeedButton
+      Action = ActRefreshBuckets
+      Enabled = True
+      Images = ImageList1
+      ImageIndex = 0
+      Position.X = 376.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 22.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object SpeedButton2: TSpeedButton
+      Action = ActUploadFile
+      Enabled = True
+      Images = ImageList1
+      ImageIndex = 1
+      Position.X = 400.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 22.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+  object UploadDialog: TOpenDialog
+    Filter = 'All Files (*.*)|*.*'
+    Options = [ofFileMustExist, ofEnableSizing]
+    Title = 'Choose file to upload...'
+    Left = 296
+    Top = 248
+  end
+  object ActionList1: TActionList
+    Images = ImageList1
+    Left = 256
+    Top = 184
+    object ActRefreshBuckets: TAction
+      Text = 'Refresh Buckets'
+      Hint = 'Refresh Buckets'
+      ImageIndex = 0
+      OnExecute = ActRefreshBucketsExecute
+      ImageIndex = 0
+    end
+    object ActUploadFile: TAction
+      Text = 'Upload File...'
+      Hint = 'Upload File...'
+      ImageIndex = 1
+      OnExecute = ActUploadFileExecute
+      ImageIndex = 1
+    end
+  end
+  object ImageList1: TImageList
+    Source = <
+      item
+        MultiResBitmap.LoadSize = 0
+        MultiResBitmap = <
+          item
+            Scale = 1.500000000000000000
+            Width = 24
+            Height = 24
+            PNG = {
+              89504E470D0A1A0A0000000D4948445200000018000000180806000000E0773D
+              F8000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              01B949444154484BD5D54B286D511CC7F1E3558A28299998CB402453BAA58499
+              E7CDAB5B624846744D0D4C0D4432616420AF9289A9814C6E268C3C22BA32F08A
+              6E5D7C7FE7ECFFB136FBE46C06F8D5E7B4F63AEBB1D73E6BAF13F90AC9C700D6
+              70883BCF3E16D18E34BC4C311E63C5E0A8D338D4E82DD768829B5EE8BBC094E0
+              2F6C80FF58C7103A3D23D882B5914958FAA0BA57A984DB691679489472ECC1DA
+              CF41E982AE7D29C005AC713D92CD0AACDF6FB47A655FE6618D6A55113233505F
+              3DD233AF1C4F0D6CF05155BC33EE4DFA26B0259D234B1549A411DAB2BADB536C
+              7B0227509A51112B269531B883BD92C2C747928B5FD08AEF55E14463E7C48ADF
+              39F688CA50871B3CA882D812F506EB87FB500E10F82341474626C244478D6E38
+              9E2BB883FEC18E575E4098A4E308EAFB5315CACB09DC41C3EE341D13364E832A
+              149B408F43AFB9CAD3089B2AD8E0CBAAB0E83C576507DC3BF0357A23D5D00651
+              3F6D9622C46313F444AF6247AE4DB28B52244A362660ED452BF1E504FA422BB0
+              4CC1EDB409FDE1B441E7D62096F00FD6E6128147CD0FF423357AF59C16DCC29D
+              28111DD561B7733419E8C62AEC4F5FE7CE3136308C427C46229127A91BA98DD8
+              E47B4B0000000049454E44AE426082}
+            FileName = 'C:\Users\rhatherall\Documents\Images\refresh.png'
+          end>
+        Name = 'Refresh'
+      end
+      item
+        MultiResBitmap.LoadSize = 0
+        MultiResBitmap = <
+          item
+            Scale = 1.500000000000000000
+            Width = 24
+            Height = 24
+            PNG = {
+              89504E470D0A1A0A0000000D4948445200000018000000180806000000E0773D
+              F8000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              01A649444154484BCD954B2B056118C7C7F5B847CA4A8A906B290B5B164A52CA
+              86A2C4C6C2D2CA5A49A7ACE503B039363E011F0245EC24362E39CAAD8EDF7FBC
+              4FA6C399D34CE7945FFD7AE779CECCF3CCCC79DF77BC0834E0099E62A3128544
+              C52F30E3BCC48235C92E5ED026D9C5DFF03D105F6113C6A21EADB80AAFE223BE
+              B8E3345A93C84FA2E2E768773A84C262D18716476AD286C1E29328BAD072034A
+              C0385A4E4DDA312F1B68175971D183961F54C2116CB2A5443E3A7007A7FCE887
+              6EB442F604C604EA9A4E3F8A4958839C94BAB168FCAB06256E14C1E350A23428
+              73A32877635EEC4E66701E732D9675D44EAA552CEA50EB62DB8F7EF384FB78A0
+              60016D76E4721985C5621683E7FCE5929EE00E5BF0188F301B9DB387CF78AB04
+              B462052EA20A09ED4D9FA8B7308A63788FDE07EAA461052134A3B6106D80BAA1
+              30465035D5D0BF33055AF271A9C4337CC06AEC47D54C6B16D9230667495454A7
+              17F57A5447DF0C91D10F89EF63EFDA8D717845FD57B5A8FFA20A4542494DBD1A
+              DCC5438CCB0DAA9136CB695C71B1B7897A4DC530690B2D8973A87768B9B8A8B0
+              3EAD29CFF3D6BE00A33C921A45FF5DDD0000000049454E44AE426082}
+            FileName = 'C:\Users\rhatherall\Documents\Images\upload.png'
+          end>
+        Name = 'Upload'
+      end>
+    Destination = <
+      item
+        Layers = <
+          item
+            Name = 'Refresh'
+          end>
+      end
+      item
+        Layers = <
+          item
+            Name = 'Upload'
+          end>
+      end>
+    Left = 320
+    Top = 184
+  end
+end
