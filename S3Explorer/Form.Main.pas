@@ -121,10 +121,16 @@ var
   LOptions: IS3Options;
 begin
   SetStatus(Format('Changing bucket to %s...', [ABucket]));
+
+  // IMPORTANT: Interacting with a bucket requires a client configured for the
+  // region in which the bucket is located. We query the location of the bucket
+  // and construct a TS3Client for the region.
   var LocationResponse := Client.GetBucketLocation(ABucket);
   if LocationResponse.IsSuccessful then
   begin
     LOptions := TS3Options.Create;
+    // If the LocationConstraint is returned empty, the bucket is located in
+    // `us-east-1`.
     if LocationResponse.LocationConstraint.IsEmpty then
       LOptions.Region := 'us-east-1'
     else
@@ -132,6 +138,8 @@ begin
     FBucketClient := TS3Client.Create(LOptions);
   end;
   FBucket := TS3Bucket.Create(ABucket, BucketClient);
+
+  // ChangePrefix triggers fetching the bucket contents.
   ChangePrefix('');
 end;
 
@@ -281,14 +289,29 @@ var
   LRequest: IS3ListObjectsV2Request;
   LResponse: IS3ListObjectsV2Response;
 begin
+  // NOTE: S3 is not a filesystem but it does provide some methods for querying
+  // it as if it were.
   LRequest := TS3ListObjectsV2Request.Create(Bucket.Name);
+  // Set the request Delimiter to `/` to reflect the common directory seperator.
   LRequest.Delimiter := '/';
+  // Specify the current Prefix (directory path) to fetch objects for.
   LRequest.Prefix := RemoveLeadingSeperator(Prefix);
   LResponse := BucketClient.ListObjectsV2(LRequest);
   if LResponse.IsSuccessful then
   begin
+    // The response's CommonPrefixes provides a list of lower-level prefixes
+    // (sub-directories).
     RenderPrefixes(LResponse.CommonPrefixes);
   end;
+
+  // The `ListObjectsV2` request will only contain a single page of objects.
+  // Multiple calls are required to retrieve the contents of a prefix
+  // (directory) containing greater than 1,000. While we could just call the
+  // following `TS3Bucket.Objects` function which will automatically page
+  // through the results returning a full list of objects, we need to call the
+  // `ListObjectsV2` response to retrieve the CommonPrefixes.
+  // While calling Objects here immediately after ListObjectsV2 is inefficient,
+  // it is performed here for convenience.
   Objects := Bucket.Objects(LRequest);
 end;
 

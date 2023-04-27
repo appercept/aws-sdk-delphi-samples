@@ -109,16 +109,28 @@ begin
   LblSource.Text := AFilePath;
   LblDestination.Text := Format('s3://%s/%s', [ABucket, AKey]);
   Show;
+  // TS3Object is a convenience model exposing object-level functions of S3.
   FObject := TS3Object.Create(ABucket, AKey, AClient);
   LblStartedAt.Text := DateToISO8601(Now);
+  // This might be a long-running task, so we use TTask to run it in another
+  // thread.
   TTask.Run(
     procedure
     begin
+      // The `TS3Object.UploadFile` procedure encapsulates a call to
+      // `TS3FileUploader` which can be used directly. The `TS3FileUploader`
+      // will make a decision on the best way to upload a file. If it is small
+      // (less than 100 MiB) then it will upload the file in a single part.
+      // Files greater than 100MiB will be split and uploaded in parts. The
+      // parts themselves are uploaded asynchronously which is why we may
+      // receive status callbacks for different parts overlapping each other.
       FObject.UploadFile(
         AFilePath,
         True,
         procedure(const AUploadId: string; APartNumber: Integer; APartLength, APartWriteCount, AOverallLength, AOverallWriteCount: Int64; var AAbort: Boolean)
         begin
+          // We are in another thread here, so we need to queue (or synchronize)
+          // these UI updates to the main (UI) thread.
           TThread.Queue(nil,
             procedure
             begin
@@ -128,6 +140,7 @@ begin
               UpdatePartProgress(APartNumber, APartLength, APartWriteCount);
             end
           );
+          // If someone has clicked abort, we can abort the upload here.
           AAbort := FAborting;
         end
       );
