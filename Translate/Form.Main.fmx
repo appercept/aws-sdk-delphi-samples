@@ -1,0 +1,85 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  Caption = 'Translate'
+  ClientHeight = 202
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object MemoTextSource: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Position.X = 8.000000000000000000
+    Position.Y = 38.000000000000000000
+    Size.Width = 289.000000000000000000
+    Size.Height = 155.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    OnKeyDown = MemoTextSourceKeyDown
+    Viewport.Width = 285.000000000000000000
+    Viewport.Height = 151.000000000000000000
+  end
+  object MemoTranslatedText: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Position.X = 343.000000000000000000
+    Position.Y = 38.000000000000000000
+    Size.Width = 289.000000000000000000
+    Size.Height = 155.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Viewport.Width = 285.000000000000000000
+    Viewport.Height = 151.000000000000000000
+  end
+  object BtnSwitchLanguages: TButton
+    Action = ActSwitchLanguages
+    Enabled = False
+    ImageIndex = -1
+    Position.X = 305.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 30.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+  end
+  object ComboSourceLanguage: TComboBox
+    Items.Strings = (
+      'auto: Detect Language Automatically')
+    ItemIndex = 0
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 289.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    OnChange = ComboSourceLanguageChange
+  end
+  object ComboTargetLanguage: TComboBox
+    Items.Strings = (
+      'en: English')
+    ItemIndex = 0
+    Position.X = 343.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 289.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+  end
+  object ActionList1: TActionList
+    Left = 304
+    Top = 40
+    object ActSwitchLanguages: TAction
+      Text = '<>'
+      Enabled = False
+      Hint = 'Switch source and target languages.'
+      OnExecute = ActSwitchLanguagesExecute
+    end
+    object ActTranslate: TAction
+      Text = 'Translate'
+      OnExecute = ActTranslateExecute
+    end
+  end
+end
