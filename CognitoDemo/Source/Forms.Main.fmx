@@ -1,0 +1,67 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  Caption = 'Cognito Demo'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object ToolBar1: TToolBar
+    Size.Width = 640.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object SpeedButton1: TSpeedButton
+      Action = ActSignInOut
+      Align = Right
+      Enabled = True
+      ImageIndex = -1
+      Position.X = 560.000000000000000000
+      Size.Width = 80.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+  object ContentMemo: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Lines.Strings = (
+      'Please wait...')
+    StyledSettings = [Family, Style, FontColor]
+    TextSettings.Font.Size = 14.000000000000000000
+    TextSettings.WordWrap = True
+    Align = Bottom
+    Position.Y = 368.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 112.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Viewport.Width = 636.000000000000000000
+    Viewport.Height = 108.000000000000000000
+  end
+  object ContentBrowser: TWebBrowser
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 328.000000000000000000
+    Size.PlatformDefault = False
+    WindowsEngine = EdgeOnly
+  end
+  object Timer1: TTimer
+    Interval = 500
+    OnTimer = Timer1Timer
+    Left = 344
+    Top = 224
+  end
+  object ActionList1: TActionList
+    Left = 304
+    Top = 224
+    object ActSignInOut: TAction
+      Text = 'Sign In'
+      OnExecute = ActSignInOutExecute
+      OnUpdate = ActSignInOutUpdate
+    end
+  end
+end

@@ -1,0 +1,205 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: |
+  An Identity Provider (IdP) to demonstrate the use of Amazon Cognito in Delphi.
+
+Parameters:
+  AuthDomainPrefix:
+    Type: String
+    Default: delphi-idp
+    Description: Give a prefix for the domain that will host the authentication UI.
+  CallbackURL:
+    Type: String
+    Default: myapp://demo
+    Description: The callback URL to be used by the app client.
+
+Resources:
+  UserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      AutoVerifiedAttributes:
+        - email
+      Schema:
+        - Name: email
+          Required: true
+          Mutable: true
+      UsernameConfiguration:
+        CaseSensitive: false
+  UserPoolDomain:
+    Type: AWS::Cognito::UserPoolDomain
+    Properties:
+      Domain: !Ref AuthDomainPrefix
+      UserPoolId: !Ref UserPool
+  UserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      AllowedOAuthFlows:
+        - code
+      AllowedOAuthFlowsUserPoolClient: true
+      AllowedOAuthScopes:
+        - openid
+        - email
+      CallbackURLs:
+        - !Ref CallbackURL
+      GenerateSecret: true
+      SupportedIdentityProviders:
+        - COGNITO
+      UserPoolId: !Ref UserPool
+
+  IdentityPool:
+    Type: AWS::Cognito::IdentityPool
+    Properties:
+      AllowUnauthenticatedIdentities: true
+      CognitoIdentityProviders:
+        - ClientId: !Ref UserPoolClient
+          ProviderName: !GetAtt UserPool.ProviderName
+
+  IdentityPoolRoleAttachment:
+    Type: AWS::Cognito::IdentityPoolRoleAttachment
+    Properties:
+      IdentityPoolId: !Ref IdentityPool
+      Roles:
+        "authenticated": !GetAtt AuthenticatedRole.Arn
+        "unauthenticated": !GetAtt UnAuthenticatedRole.Arn
+
+  AuthenticatedRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: cognito-identity.amazonaws.com
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                "cognito-identity.amazonaws.com:aud": !Ref IdentityPool
+              "ForAnyValue:StringLike":
+                "cognito-identity.amazonaws.com:amr": "authenticated"
+
+  AuthenticatedRolePolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action: "s3:ListAllMyBuckets"
+            Resource: "arn:aws:s3:::*"
+          - Effect: Allow
+            Action:
+              - "s3:GetBucketLocation"
+              - "s3:GetBucketTagging"
+              - "s3:ListBucket"
+            Resource: !Join
+              - ""
+              - - "arn:aws:s3:::"
+                - !Ref KnownUserBucket
+          - Effect: Allow
+            Action:
+              - "s3:GetObject"
+            Resource: !Join
+              - ""
+              - - "arn:aws:s3:::"
+                - !Ref KnownUserBucket
+                - "/*"
+      PolicyName: !Join
+        - ""
+        - - !Ref "AWS::StackName"
+          - "AuthenticatedRolePolicy"
+      Roles:
+        - !Ref AuthenticatedRole
+
+  UnAuthenticatedRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: cognito-identity.amazonaws.com
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                "cognito-identity.amazonaws.com:aud": !Ref IdentityPool
+              "ForAnyValue:StringLike":
+                "cognito-identity.amazonaws.com:amr": "unauthenticated"
+
+  UnauthenticatedRolePolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action: "s3:ListAllMyBuckets"
+            Resource: "arn:aws:s3:::*"
+          - Effect: Allow
+            Action:
+              - "s3:GetBucketLocation"
+              - "s3:GetBucketTagging"
+              - "s3:ListBucket"
+            Resource: !Join
+              - ""
+              - - "arn:aws:s3:::"
+                - !Ref GuestBucket
+          - Effect: Allow
+            Action:
+              - "s3:GetObject"
+            Resource: !Join
+              - ""
+              - - "arn:aws:s3:::"
+                - !Ref GuestBucket
+                - "/*"
+      PolicyName: !Join
+        - ""
+        - - !Ref "AWS::StackName"
+          - "UnauthenticatedRolePolicy"
+      Roles:
+        - !Ref UnAuthenticatedRole
+
+  GuestBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      Tags:
+        - Key: Audience
+          Value: Guests
+        - Key: Purpose
+          Value: Guest user content
+
+  KnownUserBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      Tags:
+        - Key: Audience
+          Value: KnownUsers
+        - Key: Purpose
+          Value: Authenticated user content
+
+Outputs:
+  Domain:
+    Description: The URL hosting the authentication UI.
+    Value: !Join
+      - ""
+      - - https://
+        - !Ref UserPoolDomain
+        - .auth.
+        - !Ref AWS::Region
+        - .amazoncognito.com
+  ClientId:
+    Description: The ID of the app client.
+    Value: !Ref UserPoolClient
+  CallbackURL:
+    Description: The callback URL used by the client application.
+    Value: !Ref CallbackURL
+  IdentityPoolId:
+    Description: The ID of the identity pool.
+    Value: !Ref IdentityPool
+  ProviderName:
+    Description: The provider name for the user pool.
+    Value: !GetAtt UserPool.ProviderName
+  Region:
+    Description: The AWS Region in which this stack is deployed.
+    Value: !Ref "AWS::Region"
