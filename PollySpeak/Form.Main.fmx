@@ -74,6 +74,7 @@ object MainForm: TMainForm
       ItemAppearanceObjects.ItemObjects.Accessory.Visible = False
       ItemAppearanceObjects.ItemObjects.Image.Visible = False
       OnChange = VoicesListViewChange
+      SearchVisible = True
     end
     object Splitter1: TSplitter
       Align = Left
