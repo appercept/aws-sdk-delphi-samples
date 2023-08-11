@@ -12,6 +12,20 @@ Parameters:
     Type: String
     Default: myapp://demo
     Description: The callback URL to be used by the app client.
+  ClientType:
+    Type: String
+    Default: Public
+    AllowedValues:
+      - Private
+      - Public
+    Description: |
+      Specify whether the user pool client should be Private (have a generated
+      secret), or Public (no client secret).
+
+Conditions:
+  GenerateClientSecret: !Equals
+    - "Private"
+    - !Ref ClientType
 
 Resources:
   UserPool:
@@ -41,7 +55,7 @@ Resources:
         - email
       CallbackURLs:
         - !Ref CallbackURL
-      GenerateSecret: true
+      GenerateSecret: !If [GenerateClientSecret, true, false]
       SupportedIdentityProviders:
         - COGNITO
       UserPoolId: !Ref UserPool
