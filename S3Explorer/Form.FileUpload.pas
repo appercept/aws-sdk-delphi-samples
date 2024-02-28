@@ -145,6 +145,7 @@ begin
         end
       );
       LblFinishedAt.Text := DateToISO8601(Now);
+      AbortButton.Enabled := False;
     end
   );
 end;
