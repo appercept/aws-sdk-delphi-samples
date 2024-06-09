@@ -92,24 +92,36 @@ var
   LPolygon: TPolygon;
   I: Integer;
   LPoint: ITextractPoint;
+  LBitmap: TBitmap;
+  LScaleFactor: Single;
 begin
-  SetLength(LPolygon, APath.Count);
-  for I := 0 to APath.Count - 1 do
-  begin
-    LPoint := APath[I];
-    LPolygon[I] := PointF(
-      InputDocumentImage.Bitmap.Size.Width * LPoint.X.Value,
-      InputDocumentImage.Bitmap.Size.Height * LPoint.Y.Value
-    );
+  LBitmap := TBitmap.Create;
+  try
+    LBitmap.LoadFromFile(InputDocumentFileName);
+    LScaleFactor := InputDocumentImage.Bitmap.Canvas.Scale;
+
+    SetLength(LPolygon, APath.Count);
+    for I := 0 to APath.Count - 1 do
+    begin
+      LPoint := APath[I];
+      LPolygon[I] := PointF(
+        LBitmap.Size.Width * LPoint.X.Value,
+        LBitmap.Size.Height * LPoint.Y.Value
+      );
+    end;
+    LBitmap.LoadFromFile(InputDocumentFileName);
+    LBitmap.Canvas.BeginScene;
+    LBitmap.Canvas.Stroke.Color := TAlphaColors.Red;
+    LBitmap.Canvas.Stroke.Thickness := 1.0 * LScaleFactor;
+    LBitmap.Canvas.DrawPolygon(LPolygon, 1.0);
+    LBitmap.Canvas.Fill.Color := TAlphaColors.Red;
+    LBitmap.Canvas.FillPolygon(LPolygon, 0.25);
+    LBitmap.Canvas.EndScene;
+
+    InputDocumentImage.Bitmap.Assign(LBitmap);
+  finally
+    LBitmap.Free;
   end;
-  InputDocumentImage.Bitmap.LoadFromFile(InputDocumentFileName);
-  InputDocumentImage.Bitmap.Canvas.BeginScene;
-  InputDocumentImage.Bitmap.Canvas.Stroke.Color := TAlphaColors.Red;
-  InputDocumentImage.Bitmap.Canvas.Stroke.Thickness := 1.0;
-  InputDocumentImage.Bitmap.Canvas.DrawPolygon(LPolygon, 1.0);
-  InputDocumentImage.Bitmap.Canvas.Fill.Color := TAlphaColors.Red;
-  InputDocumentImage.Bitmap.Canvas.FillPolygon(LPolygon, 0.25);
-  InputDocumentImage.Bitmap.Canvas.EndScene;
 end;
 
 procedure TMainForm.RefreshBlocksUI;
