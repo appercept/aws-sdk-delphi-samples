@@ -1,0 +1,198 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  Caption = 'Read What You See'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object Splitter1: TSplitter
+    Align = Right
+    Cursor = crHSplit
+    MinSize = 20.000000000000000000
+    Position.X = 428.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 4.000000000000000000
+    Size.Height = 440.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object ToolBar1: TToolBar
+    Padding.Left = 8.000000000000000000
+    Padding.Top = 8.000000000000000000
+    Padding.Right = 8.000000000000000000
+    Padding.Bottom = 8.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    object BtnOpenFile: TSpeedButton
+      Action = ActOpenFile
+      Align = Left
+      Enabled = True
+      ImageIndex = -1
+      Position.X = 8.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 80.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object TargetLanguageComboBox: TComboBox
+      Align = Right
+      Items.Strings = (
+        'ar-AE: Arabic (Gulf)'
+        'nl-BE: Dutch (Belgian)'
+        'da-DK: Danish'
+        'nl-NL: Dutch'
+        'en-AU: English (Australian)'
+        'en-GB: English (British)'
+        'en-IN: English (Indian)'
+        'en-IE: English (Ireland)'
+        'en-NZ: English (New Zealand)'
+        'en-ZA: English (South African)'
+        'en-US: English (US)'
+        'fi-FI: Finnish'
+        'fr-FR: French'
+        'fr-BE: French (Belgian)'
+        'fr-CA: French (Canadian)'
+        'de-DE: German'
+        'de-AT: German (Austrian)'
+        'is-IS: Icelandic'
+        'it-IT: Italian'
+        'ja-JP: Japanese'
+        'ko-KR: Korean'
+        'nb-NO: Norwegian'
+        'pl-PL: Polish'
+        'pt-BR: Portuguese (Brazil)'
+        'pt-PT: Portuguese (European)'
+        'ro-RO: Romanian'
+        'ru-RU: Russian'
+        'es-ES: Spanish (European)'
+        'es-MX: Spanish (Mexican)'
+        'es-US: Spanish (US)'
+        'sv-SE: Swedish'
+        'tr-TR: Turkish'
+        'cy-GB: Welsh')
+      ItemIndex = 5
+      Position.X = 432.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      OnChange = TargetLanguageComboBoxChange
+    end
+  end
+  object SubjectImage: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Align = Client
+    Size.Width = 428.000000000000000000
+    Size.Height = 440.000000000000000000
+    Size.PlatformDefault = False
+    OnClick = SubjectImageClick
+    OnMouseMove = SubjectImageMouseMove
+    object StatusLabel: TLabel
+      Anchors = [akLeft, akRight, akBottom]
+      Position.X = 8.000000000000000000
+      Position.Y = 415.000000000000000000
+      Size.Width = 412.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Open a file...'
+      TabOrder = 0
+    end
+  end
+  object OpenImageDialog: TOpenDialog
+    Left = 312
+    Top = 192
+  end
+  object ContextLayout: TLayout
+    Align = Right
+    Padding.Left = 4.000000000000000000
+    Padding.Top = 4.000000000000000000
+    Padding.Right = 4.000000000000000000
+    Padding.Bottom = 4.000000000000000000
+    Position.X = 432.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 208.000000000000000000
+    Size.Height = 440.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 6
+    object SelectedTextHeading: TLabel
+      Align = Top
+      AutoSize = True
+      StyledSettings = [Family, FontColor]
+      Margins.Bottom = 8.000000000000000000
+      Position.X = 4.000000000000000000
+      Position.Y = 4.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 27.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 20.000000000000000000
+      TextSettings.Font.StyleExt = {00060000000000000004000000}
+      Text = 'Selected Text:'
+      TabOrder = 1
+    end
+    object SelectedTextLabel: TLabel
+      Align = Top
+      AutoSize = True
+      StyledSettings = [Family, Style, FontColor]
+      Margins.Bottom = 8.000000000000000000
+      Position.X = 4.000000000000000000
+      Position.Y = 39.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 21.500000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 16.000000000000000000
+      Text = 'N/A'
+      TabOrder = 3
+    end
+    object TranslatedTextHeading: TLabel
+      Align = Top
+      AutoSize = True
+      StyledSettings = [Family, FontColor]
+      Margins.Bottom = 8.000000000000000000
+      Position.X = 4.000000000000000000
+      Position.Y = 68.500000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 27.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 20.000000000000000000
+      TextSettings.Font.StyleExt = {00060000000000000004000000}
+      Text = 'Translated Text:'
+      TabOrder = 0
+    end
+    object TranslatedTextLabel: TLabel
+      Align = Top
+      AutoSize = True
+      StyledSettings = [Family, Style, FontColor]
+      Margins.Bottom = 8.000000000000000000
+      Position.X = 4.000000000000000000
+      Position.Y = 103.500000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 21.500000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 16.000000000000000000
+      Text = 'N/A'
+      TabOrder = 2
+    end
+  end
+  object SpeechPlayer: TMediaPlayer
+    Left = 264
+    Top = 280
+  end
+  object MainActions: TActionList
+    Left = 216
+    Top = 192
+    object ActOpenFile: TAction
+      Text = 'Open file...'
+      Hint = 'Open an image file to inspect...'
+      OnExecute = ActOpenFileExecute
+    end
+  end
+end
