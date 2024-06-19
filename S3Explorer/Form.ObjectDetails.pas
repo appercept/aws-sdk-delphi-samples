@@ -34,7 +34,7 @@ type
     { Private declarations }
     FBucketObject: IS3Object;
     function GetS3URI(const ABucket, AKey: string): string;
-    function HumanSize(const ASizeInBytes: Integer): string;
+    function HumanSize(const ASizeInBytes: Int64): string;
     procedure SetBucketObject(const AObject: IS3Object);
     procedure SetProperty(const AProperty, AValue: string);
   public
@@ -81,11 +81,11 @@ begin
   Result := Format('s3://%s/%s', [ABucket, AKey]);
 end;
 
-function TObjectDetailsForm.HumanSize(const ASizeInBytes: Integer): string;
+function TObjectDetailsForm.HumanSize(const ASizeInBytes: Int64): string;
 const
   Scale: array[0..5] of string = ('B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB');
 var
-  LExp: Integer;
+  LExp: Int64;
 begin
   LExp := 0;
   while ASizeInBytes > Power(1024, LExp + 1) do
