@@ -1,0 +1,100 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  Caption = 'Rekognition Demo'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object ToolBar1: TToolBar
+    Padding.Left = 4.000000000000000000
+    Padding.Top = 4.000000000000000000
+    Padding.Right = 4.000000000000000000
+    Padding.Bottom = 4.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object SpeedButton1: TSpeedButton
+      Action = ActOpenImage
+      Align = Left
+      ImageIndex = -1
+      Margins.Right = 4.000000000000000000
+      Position.X = 4.000000000000000000
+      Position.Y = 4.000000000000000000
+      Size.Width = 90.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Trimming = None
+    end
+    object SpeedButton2: TSpeedButton
+      Action = ActDetectLabels
+      Align = Left
+      Enabled = False
+      ImageIndex = -1
+      Margins.Right = 4.000000000000000000
+      Position.X = 98.000000000000000000
+      Position.Y = 4.000000000000000000
+      Size.Width = 80.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Trimming = None
+    end
+  end
+  object DetectedList: TListView
+    ItemAppearanceClassName = 'TImageListItemBottomDetailAppearance'
+    ItemEditAppearanceClassName = 'TImageListItemBottomDetailShowCheckAppearance'
+    HeaderAppearanceClassName = 'TListHeaderObjects'
+    FooterAppearanceClassName = 'TListHeaderObjects'
+    Align = Left
+    Position.Y = 40.000000000000000000
+    Size.Width = 201.000000000000000000
+    Size.Height = 440.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    ItemAppearanceObjects.ItemObjects.Accessory.Visible = False
+    OnChange = DetectedListChange
+  end
+  object Image: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Align = Client
+    Size.Width = 435.000000000000000000
+    Size.Height = 440.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Splitter1: TSplitter
+    Align = Left
+    Cursor = crHSplit
+    MinSize = 20.000000000000000000
+    Position.X = 201.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 4.000000000000000000
+    Size.Height = 440.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object OpenImageDialog: TOpenDialog
+    Filter = 
+      'All Supported Image Types|*.jpeg;*.jpg;*.png|JPEG Images|*.jpeg;' +
+      '*.jpg|PNG Images|*.png|All Files|*.*'
+    Left = 120
+    Top = 280
+  end
+  object Actions: TActionList
+    Left = 80
+    Top = 200
+    object ActOpenImage: TAction
+      Text = 'Open image...'
+      OnExecute = ActOpenImageExecute
+    end
+    object ActDetectLabels: TAction
+      Text = 'Detect Labels'
+      Enabled = False
+      Hint = 'Detect Labels (objects or concepts)'
+      OnExecute = ActDetectLabelsExecute
+    end
+  end
+end
