@@ -49,14 +49,11 @@ uses
 procedure TMainForm.ActDetectLabelsExecute(Sender: TObject);
 var
   LClient: IRekognitionClient;
-  LStream: TMemoryStream;
   LResponse: IRekognitionDetectLabelsResponse;
 begin
   ActDetectLabels.Enabled := False;
   LClient := TRekognitionClient.Create;
-  LStream := TMemoryStream.Create;
-  Image.Bitmap.SaveToStream(LStream);
-  LResponse := LClient.DetectLabels(TRekognitionImage.FromStream(LStream));
+  LResponse := LClient.DetectLabels(TRekognitionImage.FromFile(FImageFileName));
   if LResponse.IsSuccessful then
     DetectedLabels := TList<IRekognitionLabel>.Create(LResponse.Labels);
 end;
