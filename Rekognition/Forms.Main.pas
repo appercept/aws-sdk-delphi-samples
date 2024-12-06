@@ -21,9 +21,11 @@ type
     OpenImageDialog: TOpenDialog;
     ActDetectLabels: TAction;
     SpeedButton2: TSpeedButton;
+    CheckShowConfidences: TCheckBox;
     procedure ActOpenImageExecute(Sender: TObject);
     procedure ActDetectLabelsExecute(Sender: TObject);
     procedure DetectedListChange(Sender: TObject);
+    procedure CheckShowConfidencesChange(Sender: TObject);
   private
     FImageFileName: string;
     FDetectedLabels: TList<IRekognitionLabel>;
@@ -47,11 +49,14 @@ uses
 procedure TMainForm.ActDetectLabelsExecute(Sender: TObject);
 var
   LClient: IRekognitionClient;
+  LStream: TMemoryStream;
   LResponse: IRekognitionDetectLabelsResponse;
 begin
   ActDetectLabels.Enabled := False;
   LClient := TRekognitionClient.Create;
-  LResponse := LClient.DetectLabels(TRekognitionImage.FromFile(FImageFileName));
+  LStream := TMemoryStream.Create;
+  Image.Bitmap.SaveToStream(LStream);
+  LResponse := LClient.DetectLabels(TRekognitionImage.FromStream(LStream));
   if LResponse.IsSuccessful then
     DetectedLabels := TList<IRekognitionLabel>.Create(LResponse.Labels);
 end;
@@ -65,6 +70,12 @@ begin
     DetectedLabels := nil;
     ActDetectLabels.Enabled := True;
   end;
+end;
+
+procedure TMainForm.CheckShowConfidencesChange(Sender: TObject);
+begin
+  if (DetectedList.ItemCount > 0) and (DetectedList.ItemIndex > -1) then
+    SelectLabel(DetectedLabels[DetectedList.ItemIndex]);
 end;
 
 procedure TMainForm.DetectedListChange(Sender: TObject);
@@ -90,34 +101,40 @@ end;
 
 procedure TMainForm.SelectLabel(const ALabel: IRekognitionLabel);
 
-  procedure OutlineBoundingBox(const ABoundingBox: IRekognitionBoundingBox;
+  procedure OutlineInstance(const AInstance: IRekognitionInstance;
     const ACanvas: TCanvas);
   var
-    LPolygon: TPolygon;
+    LInstanceRect: TRectF;
+    LTextRect: TRectF;
   begin
-    SetLength(LPolygon, 4);
-    LPolygon[0] := PointF(
-      ABoundingBox.Left.Value * ACanvas.Bitmap.Size.Width,
-      ABoundingBox.Top.Value * ACanvas.Bitmap.Size.Height
-    );
-    LPolygon[1] := PointF(
-      (ABoundingBox.Left.Value + ABoundingBox.Width.Value) * ACanvas.Bitmap.Size.Width,
-      ABoundingBox.Top.Value * ACanvas.Bitmap.Size.Height
-    );
-    LPolygon[2] := PointF(
-      (ABoundingBox.Left.Value + ABoundingBox.Width.Value) * ACanvas.Bitmap.Size.Width,
-      (ABoundingBox.Top.Value + ABoundingBox.Height.Value) * ACanvas.Bitmap.Size.Height
-    );
-    LPolygon[3] := PointF(
-      ABoundingBox.Left.Value * ACanvas.Bitmap.Size.Width,
-      (ABoundingBox.Top.Value + ABoundingBox.Height.Value) * ACanvas.Bitmap.Size.Height
+    LInstanceRect := RectF(
+      AInstance.BoundingBox.Left.Value * ACanvas.Bitmap.Size.Width,
+      AInstance.BoundingBox.Top.Value * ACanvas.Bitmap.Size.Height,
+      (AInstance.BoundingBox.Left.Value + AInstance.BoundingBox.Width.Value) * ACanvas.Bitmap.Size.Width,
+      (AInstance.BoundingBox.Top.Value + AInstance.BoundingBox.Height.Value) * ACanvas.Bitmap.Size.Height
     );
     ACanvas.BeginScene;
     ACanvas.Stroke.Color := TAlphaColors.Red;
     ACanvas.Stroke.Thickness := 1.0;
-    ACanvas.DrawPolygon(LPolygon, 1.0);
+    ACanvas.DrawRect(LInstanceRect, 1.0);
     ACanvas.Fill.Color := TAlphaColors.Red;
-    ACanvas.FillPolygon(LPolygon, 0.25);
+    ACanvas.FillRect(LInstanceRect, 0.25);
+
+    if CheckShowConfidences.IsChecked then
+    begin
+      LTextRect := RectF(
+        AInstance.BoundingBox.Left.Value * ACanvas.Bitmap.Size.Width,
+        ((AInstance.BoundingBox.Top.Value + AInstance.BoundingBox.Height.Value) * ACanvas.Bitmap.Size.Height) - 50,
+        (AInstance.BoundingBox.Left.Value * ACanvas.Bitmap.Size.Width) + 100,
+        ((AInstance.BoundingBox.Top.Value + AInstance.BoundingBox.Height.Value) * ACanvas.Bitmap.Size.Height)
+      );
+      ACanvas.Font.Size := 36;
+      ACanvas.Font.Family := 'Arial';
+      ACanvas.Fill.Color := TAlphaColors.White;
+      ACanvas.Fill.Kind := TBrushKind.Solid;
+      ACanvas.FillText(LTextRect, Format('%.2f', [AInstance.Confidence.Value]), False, 1.0, [], TTextAlign.Center, TTextAlign.Center);
+    end;
+
     ACanvas.EndScene;
   end;
 
@@ -132,7 +149,7 @@ begin
   try
     LBitmap.LoadFromFile(FImageFileName);
     for LInstance in ALabel.Instances do
-      OutlineBoundingBox(LInstance.BoundingBox, LBitmap.Canvas);
+      OutlineInstance(LInstance, LBitmap.Canvas);
     Image.Bitmap.Assign(LBitmap);
   finally
     LBitmap.Free;

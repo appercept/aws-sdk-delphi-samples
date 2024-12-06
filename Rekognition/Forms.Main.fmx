@@ -42,6 +42,17 @@ object MainForm: TMainForm
       Size.PlatformDefault = False
       TextSettings.Trimming = None
     end
+    object CheckShowConfidences: TCheckBox
+      Align = Right
+      Position.X = 504.000000000000000000
+      Position.Y = 4.000000000000000000
+      Size.Width = 132.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Show Confidences'
+      OnChange = CheckShowConfidencesChange
+    end
   end
   object DetectedList: TListView
     ItemAppearanceClassName = 'TImageListItemBottomDetailAppearance'
