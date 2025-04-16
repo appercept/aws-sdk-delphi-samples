@@ -1,4 +1,4 @@
-﻿program RekognitionDemo;
+﻿program LabelDetectionDemo;
 
 uses
   System.StartUpCopy,

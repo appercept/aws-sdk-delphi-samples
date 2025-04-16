@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{1320C974-1F26-4B56-BC96-643C41EFE9E7}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="LabelDetection\LabelDetectionDemo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ContentModeration\ContentModerationDemo.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="LabelDetectionDemo">
+        <MSBuild Projects="LabelDetection\LabelDetectionDemo.dproj"/>
+    </Target>
+    <Target Name="LabelDetectionDemo:Clean">
+        <MSBuild Projects="LabelDetection\LabelDetectionDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="LabelDetectionDemo:Make">
+        <MSBuild Projects="LabelDetection\LabelDetectionDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ContentModerationDemo">
+        <MSBuild Projects="ContentModeration\ContentModerationDemo.dproj"/>
+    </Target>
+    <Target Name="ContentModerationDemo:Clean">
+        <MSBuild Projects="ContentModeration\ContentModerationDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ContentModerationDemo:Make">
+        <MSBuild Projects="ContentModeration\ContentModerationDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="LabelDetectionDemo;ContentModerationDemo"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="LabelDetectionDemo:Clean;ContentModerationDemo:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="LabelDetectionDemo:Make;ContentModerationDemo:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

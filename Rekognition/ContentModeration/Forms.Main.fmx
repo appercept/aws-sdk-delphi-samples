@@ -1,12 +1,13 @@
 object MainForm: TMainForm
   Left = 0
   Top = 0
-  Caption = 'Rekognition Demo'
+  Caption = 'Rekognition Content Moderation Demo'
   ClientHeight = 480
   ClientWidth = 640
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  OnClose = FormClose
   DesignerMasterStyle = 0
   object ToolBar1: TToolBar
     Padding.Left = 4.000000000000000000
@@ -30,28 +31,28 @@ object MainForm: TMainForm
       TextSettings.Trimming = None
     end
     object SpeedButton2: TSpeedButton
-      Action = ActDetectLabels
+      Action = ActDetectModerationLabels
       Align = Left
       Enabled = False
       ImageIndex = -1
       Margins.Right = 4.000000000000000000
       Position.X = 98.000000000000000000
       Position.Y = 4.000000000000000000
-      Size.Width = 80.000000000000000000
+      Size.Width = 175.000000000000000000
       Size.Height = 32.000000000000000000
       Size.PlatformDefault = False
       TextSettings.Trimming = None
     end
-    object CheckShowConfidences: TCheckBox
+    object CheckReveal: TCheckBox
       Align = Right
-      Position.X = 504.000000000000000000
+      Position.X = 536.000000000000000000
       Position.Y = 4.000000000000000000
-      Size.Width = 132.000000000000000000
+      Size.Width = 100.000000000000000000
       Size.Height = 32.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 1
-      Text = 'Show Confidences'
-      OnChange = CheckShowConfidencesChange
+      Text = 'Reveal'
+      OnChange = CheckRevealChange
     end
   end
   object DetectedList: TListView
@@ -66,7 +67,7 @@ object MainForm: TMainForm
     Size.PlatformDefault = False
     TabOrder = 3
     ItemAppearanceObjects.ItemObjects.Accessory.Visible = False
-    OnChange = DetectedListChange
+    ItemAppearanceObjects.ItemObjects.Image.Visible = False
   end
   object Image: TImage
     MultiResBitmap = <
@@ -76,6 +77,9 @@ object MainForm: TMainForm
     Size.Width = 435.000000000000000000
     Size.Height = 440.000000000000000000
     Size.PlatformDefault = False
+    object ImageBlurEffect: TGaussianBlurEffect
+      BlurAmount = 5.000000000000000000
+    end
   end
   object Splitter1: TSplitter
     Align = Left
@@ -101,11 +105,11 @@ object MainForm: TMainForm
       Text = 'Open image...'
       OnExecute = ActOpenImageExecute
     end
-    object ActDetectLabels: TAction
-      Text = 'Detect Labels'
+    object ActDetectModerationLabels: TAction
+      Text = 'Detect Moderation Labels'
       Enabled = False
-      Hint = 'Detect Labels (objects or concepts)'
-      OnExecute = ActDetectLabelsExecute
+      Hint = 'Detect Moderation Labels'
+      OnExecute = ActDetectModerationLabelsExecute
     end
   end
 end
