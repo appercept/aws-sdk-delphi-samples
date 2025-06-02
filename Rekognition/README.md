@@ -1,6 +1,8 @@
 # Rekognition Demos
-There are two Rekognition sample projects:
+There are three Rekognition sample projects:
 - `LabelDetectionDemo` demostrating the use of `DetectLabels` of
+  `TRekognitionClient` to identify objects and concepts within an image.
+- `CustomLabelDetectionDemo` demostrating the use of `DetectCustomLabels` of
   `TRekognitionClient` to identify objects and concepts within an image.
 - `ContentModerationDemo` demonstrating the use of `DetectModerationLabels` of
   `TRekognitionClient` to detect potentially unsuitable content.
@@ -15,6 +17,23 @@ There are two Rekognition sample projects:
 4. Click the "Open Image…" button and choose an image file.
 5. Click "Detect Labels".
 6. Once the list of detected labels is populated on the left, you can select an
+   item to highlight on the image. Note that some items listed won't have
+   instances within the image as they are general scene information.
+
+## Custom Label Detection
+![Rekognition Demo application detecting custom labels in an image.](CustomLabelDetection.png)
+
+###  Running the custom label detection sample
+NOTE: To run this demo, you will need a pre-trained Amazon Rekognition Custom
+Labels projects running in your account.
+1. Open "Rekognition Demos.groupproj" in Delphi or RAD Studio.
+2. Activate the CustomLabelDetectionDemo.exe project.
+3. Select "Run \> Run" from the menu or press F9.
+4. Select a model from the list of running models on the left. Note, this list
+   will be empty if there are no running models in your AWS account.
+5. Click the "Open Image…" button and choose an image file.
+6. Click "Detect Custom Labels".
+7. Once the list of detected labels is populated on the right, you can select an
    item to highlight on the image. Note that some items listed won't have
    instances within the image as they are general scene information.
 

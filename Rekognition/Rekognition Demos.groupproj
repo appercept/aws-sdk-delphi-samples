@@ -6,6 +6,9 @@
         <Projects Include="LabelDetection\LabelDetectionDemo.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="CustomLabelDetection\CustomLabelDetectionDemo.dproj">
+            <Dependencies/>
+        </Projects>
         <Projects Include="ContentModeration\ContentModerationDemo.dproj">
             <Dependencies/>
         </Projects>
@@ -26,6 +29,15 @@
     <Target Name="LabelDetectionDemo:Make">
         <MSBuild Projects="LabelDetection\LabelDetectionDemo.dproj" Targets="Make"/>
     </Target>
+    <Target Name="CustomLabelDetectionDemo">
+        <MSBuild Projects="CustomLabelDetection\CustomLabelDetectionDemo.dproj"/>
+    </Target>
+    <Target Name="CustomLabelDetectionDemo:Clean">
+        <MSBuild Projects="CustomLabelDetection\CustomLabelDetectionDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CustomLabelDetectionDemo:Make">
+        <MSBuild Projects="CustomLabelDetection\CustomLabelDetectionDemo.dproj" Targets="Make"/>
+    </Target>
     <Target Name="ContentModerationDemo">
         <MSBuild Projects="ContentModeration\ContentModerationDemo.dproj"/>
     </Target>
@@ -36,13 +48,13 @@
         <MSBuild Projects="ContentModeration\ContentModerationDemo.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="LabelDetectionDemo;ContentModerationDemo"/>
+        <CallTarget Targets="LabelDetectionDemo;CustomLabelDetectionDemo;ContentModerationDemo"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="LabelDetectionDemo:Clean;ContentModerationDemo:Clean"/>
+        <CallTarget Targets="LabelDetectionDemo:Clean;CustomLabelDetectionDemo:Clean;ContentModerationDemo:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="LabelDetectionDemo:Make;ContentModerationDemo:Make"/>
+        <CallTarget Targets="LabelDetectionDemo:Make;CustomLabelDetectionDemo:Make;ContentModerationDemo:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
