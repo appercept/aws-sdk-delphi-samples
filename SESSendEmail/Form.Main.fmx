@@ -1,0 +1,150 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  Caption = 'Amazon SES Send Email'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object EditMessage: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 351.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Viewport.Width = 636.000000000000000000
+    Viewport.Height = 347.000000000000000000
+  end
+  object Panel1: TPanel
+    Align = Top
+    Size.Width = 640.000000000000000000
+    Size.Height = 129.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object EditFrom: TComboEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Anchors = [akLeft, akTop, akRight]
+      TabOrder = 2
+      ItemHeight = 19.000000000000000000
+      ItemIndex = -1
+      Position.X = 89.000000000000000000
+      Position.Y = 38.000000000000000000
+      Size.Width = 455.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object EditSubject: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Anchors = [akLeft, akTop, akRight]
+      TabOrder = 4
+      Position.X = 89.000000000000000000
+      Position.Y = 98.000000000000000000
+      Size.Width = 455.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object EditTo: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Anchors = [akLeft, akTop, akRight]
+      TabOrder = 3
+      Position.X = 89.000000000000000000
+      Position.Y = 68.000000000000000000
+      Size.Width = 455.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object FromIdentityLabel: TLabel
+      Position.X = 7.000000000000000000
+      Position.Y = 41.000000000000000000
+      Size.Width = 74.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'From Identity'
+      TabOrder = 8
+    end
+    object SubjectLabel: TLabel
+      Position.X = 7.000000000000000000
+      Position.Y = 101.000000000000000000
+      Size.Width = 57.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Subject'
+      TabOrder = 10
+    end
+    object ToLabel: TLabel
+      Position.X = 7.000000000000000000
+      Position.Y = 71.000000000000000000
+      Size.Width = 57.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'To'
+      TabOrder = 9
+    end
+    object SpeedButton1: TSpeedButton
+      Action = ActSendEmail
+      Anchors = [akTop, akRight]
+      ImageIndex = -1
+      Position.X = 552.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 80.000000000000000000
+      Size.Height = 110.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Trimming = None
+    end
+    object RegionLabel: TLabel
+      Position.X = 7.000000000000000000
+      Position.Y = 11.000000000000000000
+      Size.Width = 74.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'From Region'
+      TabOrder = 7
+    end
+    object SelectRegion: TComboEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Anchors = [akLeft, akTop, akRight]
+      TabOrder = 1
+      ItemHeight = 19.000000000000000000
+      Items.Strings = (
+        'ap-northeast-1'
+        'ap-northeast-2'
+        'ap-northeast-3'
+        'ap-south-1'
+        'ap-southeast-1'
+        'ap-southeast-2'
+        'ca-central-1'
+        'eu-central-1'
+        'eu-north-1'
+        'eu-west-1'
+        'eu-west-2'
+        'eu-west-3'
+        'sa-east-1'
+        'us-east-1'
+        'us-east-2'
+        'us-west-1'
+        'us-west-2')
+      ItemIndex = 13
+      Text = 'us-east-1'
+      Position.X = 89.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 455.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      OnChange = SelectRegionChange
+    end
+  end
+  object ActionList1: TActionList
+    Left = 304
+    Top = 224
+    object ActSendEmail: TAction
+      Text = 'Send'
+      OnExecute = ActSendEmailExecute
+      OnUpdate = ActSendEmailUpdate
+    end
+  end
+end
