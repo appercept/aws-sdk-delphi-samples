@@ -1,17 +1,44 @@
-# aws-sdk-delphi-samples
-Sample projects demonstrating Appercept AWS SDK for Delphi.
-Each of these sample projects demonstrates a feature or technique of using Amazon Web Services with Delphi and the Appercept AWS SDK.
+# Appercept AWS SDK for Delphi — Samples
 
-## Prerequisites
-### AWS Account
-To run these samples, you will need an AWS account. If you don’t already have one, you can head over to the [AWS Management Console](http://console.aws.amazon.com/ "AWS Management Console") and sign-up.
+A collection of sample projects built with the [Appercept AWS SDK for Delphi](https://www.appercept.com/products/aws-sdk-delphi). Each project demonstrates a different use of Amazon Web Services from Delphi, from single-service basics to multi-service integrations.
 
-### AWS Credentials
-For the sample programs to run on your local machine, they need to be configured with AWS credentials for access to the relevant services. While AWS Identity and Access Management (IAM) is beyond the scope of this article, you will need to create an “Access Key” for a user with the relevant permissions. You can find more details on this in the [AWS Identity and Access Management User Guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html). Once you have an access key, you will need to configure your local machine. Details of configuration options can be found in the [Appercept AWS SDK documentation](https://docs.appercept.com/aws-sdk/Configuration.html).
+## Samples
+
+| Sample                                          | AWS Services               | Description                                                                                |
+| ----------------------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------ |
+| [CognitoDemo](CognitoDemo/)                     | Cognito, S3                | Hosted UI authentication with authenticated and unauthenticated credential flows           |
+| [PollySpeak](PollySpeak/)                       | Polly                      | Text-to-speech with voice selection, standard/neural engines, and SSML                     |
+| [ReadWhatYouSee](ReadWhatYouSee/)               | Textract, Translate, Polly | Detect text in an image, translate it, and read it aloud — three services working together |
+| [Rekognition](Rekognition/)                     | Rekognition                | Three demos: label detection, custom label detection, and content moderation               |
+| [S3Explorer](S3Explorer/)                       | S3                         | Browse buckets, navigate prefixes, upload (with multi-part), download, and inspect objects |
+| [SecretsManagerConsole](SecretsManagerConsole/) | Secrets Manager, KMS       | Create, list, and retrieve secrets with KMS key management                                 |
+| [SESSendEmail](SESSendEmail/)                   | SES v2                     | Send email using verified identities                                                       |
+| [SQSQueuePoller](SQSQueuePoller/)               | SQS                        | Console app pair: a poller using `TSQSQueuePoller` and a sender using `TSQSClient`         |
+| [Textract](Textract/)                           | Textract                   | Detect and highlight text within document images                                           |
+| [Translate](Translate/)                         | Translate                  | Translate text between languages                                                           |
 
 ## Getting Started
-1. Clone this repository.
-2. Browse the projects and check the README files for details of each project.
+
+1. Install the [Appercept AWS SDK for Delphi](https://www.appercept.com/products/aws-sdk-delphi). Check the product page for supported Delphi versions and platforms.
+2. Clone this repository.
+3. Open any sample `.dproj` in RAD Studio / Delphi and run it. Each sample has its own README with specific instructions.
+
+## Prerequisites
+
+### AWS Account
+
+You'll need an AWS account. If you don't have one yet, sign up at the [AWS Management Console](https://console.aws.amazon.com/).
+
+### AWS Credentials
+
+The samples authenticate using standard AWS credential configuration. You'll need an IAM user or role with an access key and the appropriate permissions for the services each sample uses.
+
+For details on setting up credentials, see the [AWS IAM User Guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html).
 
 ## Costs
-These samples interact with your AWS account, and you may incur costs associated with the services accessed. Many of these services demonstrated have a [Free Tier](https://aws.amazon.com/free "AWS Free Tier") that may let you run these samples without charge. You should understand the cost model for the services you intend to use. Please keep track of any resources you create and delete/remove them appropriately so you do not incur any unexpected costs.
+
+These samples interact with your AWS account and may incur costs. Many of the services used offer a [Free Tier](https://aws.amazon.com/free) that may cover casual experimentation. Be sure to understand the pricing for any service you use, and clean up resources when you're done.
+
+## License
+
+The sample code in this repository is released under the [MIT License](LICENSE). The Appercept AWS SDK for Delphi is a separate commercial product — see the [product page](https://www.appercept.com/products/aws-sdk-delphi) for licensing details.

@@ -1,28 +1,53 @@
-﻿# Secrets Manager Console
-Secrets Manager Console demonstrates the following features of
-`TSecretsManagerClient` and AWS Secrets Manager:
-1. Querying secrets using `ListSecrets`.
-2. Creating secrets using `CreateSecret`.
-3. Fetching secrets using `DescribeSecret` to retrieve meta-data and
-    `GetSecretValue` to retrieve the stored secret.
+# Secrets Manager Console
 
-When creating secrets, this demo also shows the use of AWS Key Management
-Service (AWS KMS) to query KMS keys to use with Secrets Manager. The `ListKeys`,
-`DescribeKey`, and `ListAliases` methods of `TKMSClient` are demonstrated.
+Create, list, and retrieve secrets using AWS Secrets Manager, with KMS key
+selection for encryption. Also uses AWS Key Management Service (KMS) to list
+and describe available encryption keys.
 
 ![Secrets Manager Console demo running on Windows](Screenshot.png)
+
+## What's demonstrated
+
+**Secrets Manager** (`TSecretsManagerClient`):
+
+- `ListSecrets`, `CreateSecret`, `DescribeSecret`, `GetSecretValue`
+
+**Key Management Service** (`TKMSClient`):
+
+- `ListKeys` and `DescribeKey` (with pagination)
+- `ListAliases` to map key aliases to key metadata (with pagination)
+
+```pascal
+LOptions := TSecretsManagerOptions.Create;
+LOptions.Region := 'eu-west-1';
+Client := TSecretsManagerClient.Create(LOptions);
+
+// Create a secret
+LRequest := TSecretsManagerCreateSecretRequest.Create('my-secret', 'super-secret-value');
+LRequest.KmsKeyId := LSelectedKey.KeyId;
+LResponse := Client.CreateSecret(LRequest);
+```
+
 ## Running the sample
+
 1. Open "SecretsManagerConsole.dproj" in Delphi or RAD Studio.
-2. Select “Run \> Run” from the menu or press F9.
+2. Select "Run \> Run" from the menu or press F9.
 3. Select a region from the list on the top-left.
 4. To create a new secret, click the "+" sign on the top-right.
 5. To view information or retrieve the secret value, double-click a secret in
-    the list.
+   the list.
 
-## Further Reading
-To learn more about the features of AWS Secrets Manager, have a read of the
-[AWS Secrets Manager Use Guide](https://docs.aws.amazon.com/secretsmanager/latest/userguide/index.html).
+## Required IAM permissions
 
-To learn more about the features of AWS Key Management Service (AWS KMS), have a
-read of the
-[AWS Key Management Service User Guide](https://docs.aws.amazon.com/kms/latest/developerguide/index.html).
+- `secretsmanager:ListSecrets`
+- `secretsmanager:CreateSecret`
+- `secretsmanager:DescribeSecret`
+- `secretsmanager:GetSecretValue`
+- `kms:ListKeys`
+- `kms:DescribeKey`
+- `kms:ListAliases`
+
+## Further reading
+
+- [AWS Secrets Manager User Guide](https://docs.aws.amazon.com/secretsmanager/latest/userguide/index.html)
+- [AWS Key Management Service Developer Guide](https://docs.aws.amazon.com/kms/latest/developerguide/index.html)
